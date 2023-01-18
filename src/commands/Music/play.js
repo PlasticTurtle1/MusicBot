@@ -19,7 +19,7 @@ class Play extends Command {
 			name: 'play',
 			guildOnly: true,
 			dirname: __dirname,
-			aliases: ['p'],
+			aliases: ['playsong'],
 			botPermissions: [Flags.SendMessages, Flags.EmbedLinks, Flags.Connect, Flags.Speak],
 			description: 'Play a song.',
 			usage: 'play <link / song name>',
