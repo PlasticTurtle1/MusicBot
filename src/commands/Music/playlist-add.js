@@ -84,7 +84,7 @@ class PAdd extends Command {
 		} else if (res.loadType == 'PLAYLIST_LOADED' || res.loadType == 'TRACK_LOADED') {
 			try {
 				// add songs to playlist
-				const newTracks = res.tracks.slice(0, (message.author.premium ? 200 : 100) - playlist.songs.length);
+				const newTracks = res.tracks.slice(0, (message.author.premium ? 1000 : 800) - playlist.songs.length);
 				playlist.songs.push(...newTracks);
 				playlist.duration = parseInt(playlist.duration) + parseInt(res.tracks.reduce((prev, curr) => prev + curr.duration, 0));
 				await playlist.save();
