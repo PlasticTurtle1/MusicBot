@@ -91,7 +91,7 @@ class Egglord extends Client {
 		 * @type {string}
 		*/
 		this.Activity = [];
-		this.PresenceType = 'PLAYING';
+		this.PresenceType = 'LISTENING';
 
 		/**
 		 * Basic statistics for the bot
