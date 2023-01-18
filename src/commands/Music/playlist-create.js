@@ -66,7 +66,7 @@ class PCreate extends Command {
 			} else if (playlists[0] && !message.author.premium) {
 				// User needs premium to save more playlists
 				return msg.edit(message.translate('music/p-create:NO_PREM'));
-			} else if (playlists.length >= 3 && message.author.premium) {
+			} else if (playlists.length >= 20 && message.author.premium) {
 				// there is a max of 3 playlists per a user even with premium
 				return msg.edit(message.translate('music/p-create:MAX_PLAYLISTS'));
 			} else if (playlists && message.author.premium) {
@@ -134,7 +134,7 @@ class PCreate extends Command {
 				duration = res.tracks[index].duration;
 				search.delete();
 			} else {
-				tracks = res.tracks.slice(0, message.author.premium ? 200 : 100);
+				tracks = res.tracks.slice(0, message.author.premium ? 1000 : 800);
 				thumbnail = res.playlist?.selectedTrack?.thumbnail ?? res.tracks[0].thumbnail;
 				duration = res.playlist?.duration ?? res.tracks[0].duration;
 			}
@@ -158,7 +158,7 @@ class PCreate extends Command {
 					message.translate('music/p-create:DESC_2', { NUM: getReadableTime(parseInt(newPlaylist.duration)) }),
 					message.translate('music/p-create:DESC_3', { NAME: (res.loadType == 'PLAYLIST_LOADED') ? res.playlist.name : tracks[0].title, NUM: tracks.length, TITLE: message.args[0] }),
 				].join('\n'))
-				.setFooter({ text: message.guild.translate('music/p-create:FOOTER', { ID: newPlaylist._id, NUM: newPlaylist.songs.length, PREM: (message.author.premium) ? '200' : '100' }) })
+				.setFooter({ text: message.guild.translate('music/p-create:FOOTER', { ID: newPlaylist._id, NUM: newPlaylist.songs.length, PREM: (message.author.premium) ? '1000' : '800' }) })
 				.setTimestamp();
 			msg.edit({ embeds: [embed] });
 		} else {
