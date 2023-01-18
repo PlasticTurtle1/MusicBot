@@ -5,7 +5,6 @@ const { ActivityType, Client, Collection, GatewayIntentBits: FLAGS, Partials, Pe
 	path = require('path'),
 	{ promisify } = require('util'),
 	AudioManager = require('./Audio-Manager'),
-	Reddit = require('../APIs/reddit.js'),
     { get } = require('axios'),
 	readdir = promisify(require('fs').readdir);
 
@@ -141,8 +140,6 @@ class Egglord extends Client {
 		 * @type {Class}
 		*/
 		this.manager = new AudioManager(this);
-
-		this.reddit = new Reddit();
 	}
 
 	/**
@@ -193,6 +190,7 @@ class Egglord extends Client {
 						const item = {
 							name: command.help.name,
 							description: command.help.description,
+                            nsfw: command.conf.nsfw,
 							defaultMemberPermissions: command.conf.userPermissions.length >= 1 ? command.conf.userPermissions : PermissionFlag.SendMessages,
 						};
 						if (command.conf.options[0]) item.options = command.conf.options;
