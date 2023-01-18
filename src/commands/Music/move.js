@@ -58,7 +58,7 @@ class Move extends Command {
 		if (message.args[0] === 0) return message.channel.send(message.translate('music/move:IS_PLAYING', { PREFIX: settings.prefix }));
 
 		// Make sure number is position in the queue
-		if ((message.args[0] > player.queue.length) || (message.args[0] && !player.queue[message.args[0]])) return message.channel.error('music/move:NOT_FOUND');
+		if ((message.args[0] > player.queue.length)) return message.channel.error('music/move:NOT_FOUND');
 
 		if (!message.args[1]) {
 			const song = player.queue[message.args[0] - 1];
