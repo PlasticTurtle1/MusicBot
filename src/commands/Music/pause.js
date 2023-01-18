@@ -15,9 +15,9 @@ class Pause extends Command {
 	constructor(bot) {
 		super(bot, {
 			name: 'pause',
-			aliases: ['p'],
 			guildOnly: true,
 			dirname: __dirname,
+			aliases: ['p'],
 			botPermissions: [Flags.SendMessages, Flags.EmbedLinks, Flags.Speak],
 			description: 'Pauses the music.',
 			usage: 'pause',
