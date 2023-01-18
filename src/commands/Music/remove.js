@@ -17,6 +17,7 @@ class Remove extends Command {
 			name: 'remove',
 			guildOnly: true,
 			dirname: __dirname,
+			aliases: ['r'],
 			description: 'Removes a song from the queue',
 			usage: 'remove <position> [position]',
 			cooldown: 3000,
@@ -65,7 +66,7 @@ class Remove extends Command {
 		} else {
 			if (message.args[0] == 0 || message.args[1] == 0) return message.channel.error('music/remove:PLAYING', { PREFIX: settings.prefix });
 			if (message.args[0] > player.queue.length || message.args[1] > player.queue.length) return message.channel.error('music/remove:MISSING');
-			if (message.args[0] > message.args[1]) return message.channel.error('music/remove:INVALID');
+			if (parseInt(message.args[0]) > parseInt(message.args[1])) return message.channel.error('music/remove:INVALID');
 
 			const songsToRemove = message.args[1] - message.args[0];
 			player.queue.splice(message.args[0] - 1, songsToRemove + 1);
