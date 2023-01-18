@@ -63,7 +63,7 @@ class GuildCreate extends Event {
 		if (modChannel) bot.addEmbed(modChannel.id, [embed, attachment]);
 
 		// update bot's activity
-		bot.SetActivity(ActivityType.Watching, [`${bot.guilds.cache.size} servers!`, `${bot.users.cache.size} users!`]);
+		bot.SetActivity(ActivityType.Listening, [`-help`]);
 
 		// get slash commands for category
 		const enabledPlugins = guild.settings.plugins;
