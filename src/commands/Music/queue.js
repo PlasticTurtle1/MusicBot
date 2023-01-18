@@ -17,7 +17,7 @@ class Queue extends Command {
 			name: 'queue',
 			guildOnly: true,
 			dirname: __dirname,
-			aliases: ['que'],
+			aliases: ['q'],
 			botPermissions: [Flags.SendMessages, Flags.EmbedLinks, Flags.AddReactions],
 			description: 'Displays the queue.',
 			usage: 'queue [pageNumber]',
