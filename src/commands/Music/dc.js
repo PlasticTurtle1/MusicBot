@@ -16,7 +16,7 @@ class Disconnect extends Command {
 			name: 'dc',
 			guildOnly: true,
 			dirname: __dirname,
-			aliases: ['stop', 'disconnect'],
+			aliases: ['stop', 'disconnect', 'leave'],
 			description: 'Disconnects the bot from the voice channel.',
 			usage: 'dc',
 			cooldown: 3000,
