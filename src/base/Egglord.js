@@ -5,7 +5,7 @@ const { ActivityType, Client, Collection, GatewayIntentBits: FLAGS, Partials, Pe
 	path = require('path'),
 	{ promisify } = require('util'),
 	AudioManager = require('./Audio-Manager'),
-    	{ get } = require('axios'),
+	{ get } = require('axios'),
 	readdir = promisify(require('fs').readdir);
 
 /**
@@ -54,7 +54,7 @@ class Egglord extends Client {
 					threshold: 5000,
 					embedColor: '#FF0000',
 				},
-               			pauseOptions: {
+				pauseOptions: {
 					isPaused: false,
 					content: '⚠️ **THIS GIVEAWAY IS PAUSED !** ⚠️',
 					embedColor: '#FFFF00',
