@@ -13,10 +13,10 @@ class RandomCaps extends Command {
 	*/
 	constructor(bot) {
 		super(bot, {
-			name: 'random-capitalisation',
+			name: 'random-caps',
 			dirname: __dirname,
 			description: 'Generate a random caps',
-			usage: 'random-capitalisation <string>',
+			usage: 'random-caps <string>',
 			cooldown: 1000,
 			slash: false,
 			isSubCmd: true,
