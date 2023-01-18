@@ -5,7 +5,7 @@ const { ActivityType, Client, Collection, GatewayIntentBits: FLAGS, Partials, Pe
 	path = require('path'),
 	{ promisify } = require('util'),
 	AudioManager = require('./Audio-Manager'),
-	{ get } = require('axios'),
+    { get } = require('axios'),
 	readdir = promisify(require('fs').readdir);
 
 /**
@@ -22,9 +22,9 @@ class Egglord extends Client {
 			presence: {
 				status: 'online',
 				activities: [{
-					name: 'my mention',
+					name: '-help',
 					type: ActivityType.Listening,
-					url: 'https://www.twitch.tv/ram5s5',
+					url: 'https://www.twitch.tv/Fynix_02',
 				}],
 			},
 		});
@@ -53,7 +53,7 @@ class Egglord extends Client {
 					threshold: 5000,
 					embedColor: '#FF0000',
 				},
-				pauseOptions: {
+                pauseOptions: {
 					isPaused: false,
 					content: '⚠️ **THIS GIVEAWAY IS PAUSED !** ⚠️',
 					embedColor: '#FFFF00',
@@ -166,7 +166,7 @@ class Egglord extends Client {
 		this.PresenceType = type;
 		try {
 			let j = 0;
-			setInterval(() => this.user.setActivity(`${this.Activity[j++ % this.Activity.length]}`, { type: type, url: 'https://www.twitch.tv/ram5s5' }), 10000);
+			setInterval(() => this.user.setActivity(`${this.Activity[j++ % this.Activity.length]}`, { type: type, url: 'https://www.twitch.tv/Fynix_02' }), 10000);
 		} catch (e) {
 			console.log(e);
 		}
@@ -204,7 +204,7 @@ class Egglord extends Client {
 						const item = {
 							name: command.help.name,
 							description: command.help.description,
-							nsfw: command.conf.nsfw,
+                            nsfw: command.conf.nsfw,
 							defaultMemberPermissions: command.conf.userPermissions.length >= 1 ? command.conf.userPermissions : PermissionFlag.SendMessages,
 						};
 						if (command.conf.options[0]) item.options = command.conf.options;
