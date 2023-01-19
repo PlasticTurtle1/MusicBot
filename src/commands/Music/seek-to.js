@@ -1,6 +1,6 @@
 // Dependencies
 const { Embed, time: { read24hrFormat, getReadableTime }, functions: { checkMusic } } = require('../../utils'),
-	{ ApplicationCommandOptionType, PermissionsBitField: { Flags } } = require('discord.js'),
+	{ ApplicationCommandOptionType, EmbedBuilder, PermissionsBitField: { Flags } } = require('discord.js'),
 	Command = require('../../structures/Command.js');
 
 /**
@@ -14,21 +14,22 @@ class Rewind extends Command {
 	*/
 	constructor(bot) {
 		super(bot, {
-			name: 'rewind',
+			name: 'seek-to',
 			guildOnly: true,
 			dirname: __dirname,
 			aliases: ['rw'],
 			botPermissions: [Flags.SendMessages, Flags.EmbedLinks, Flags.Speak],
-			description: 'Rewinds the player by your specified amount.',
+			description: 'Sets the playing track\'s position to the specified position.',
 			usage: 'rewind <time>',
 			cooldown: 3000,
 			examples: ['rw 1:00', 'rw 1:32:00'],
-			slash: true,
+			slash: false,
+			isSubCmd: true,
 			options: [{
 				name: 'time',
-				description: 'The time you want to rewind to.',
+				description: 'The time to seek to.',
 				type: ApplicationCommandOptionType.String,
-				required: false,
+				required: true,
 			}],
 		});
 	}
@@ -79,21 +80,18 @@ class Rewind extends Command {
 		const playable = checkMusic(member, bot);
 		if (typeof (playable) !== 'boolean') return interaction.reply({ embeds: [channel.error(playable, {}, true)], ephemeral: true });
 
-		// Make sure song isn't a stream
-		const player = bot.manager?.players.get(member.guild.id);
-		if (!player.queue.current.isSeekable) return interaction.reply({ ephemeral: true, embeds: [channel.error('music/rewind:LIVESTREAM', { ERROR: null }, true)] });
-
 		// update the time
-		const time = read24hrFormat(args.get('time')?.value ?? '10');
+		const player = bot.manager?.players.get(member.guild.id);
+		const time = read24hrFormat(args.get('time').value);
 
-		if (time + player.position <= 0) {
-			return interaction.reply({ ephemeral: true, embeds: [channel.error('music/rewind:INVALID', { ERROR: null }, true)] });
+		if (time > player.queue.current.duration) {
+			return interaction.reply({ ephemeral: true, embeds: [channel.error('music/seek:INVALID', { TIME: new Date(player.queue.current.duration).toISOString().slice(11, 19) }, true)] });
 		} else {
-			player.seek(player.position - time);
-			const embed = new Embed(bot, guild)
+			player.seek(time);
+			const embed = new EmbedBuilder()
 				.setColor(member.displayHexColor)
-				.setDescription(guild.translate('music/rewind:NEW_TIME', { NEW: new Date(player.position).toISOString().slice(14, 19), OLD: getReadableTime(time) }));
-			interaction.reply(embed);
+				.setDescription(bot.translate('music/seek:UPDATED', { TIME: new Date(time).toISOString().slice(14, 19) }));
+			interaction.reply({ embeds: [embed] });
 		}
 	}
 }

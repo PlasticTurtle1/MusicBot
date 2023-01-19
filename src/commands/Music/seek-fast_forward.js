@@ -14,19 +14,20 @@ class FastForward extends Command {
 	*/
 	constructor(bot) {
 		super(bot, {
-			name: 'fast-forward',
+			name: 'seek-fast_forward',
 			guildOnly: true,
 			dirname: __dirname,
 			aliases: ['ffw', 'fastforward'],
 			botPermissions: [Flags.SendMessages, Flags.EmbedLinks, Flags.Speak],
-			description: 'Fast forwards the player by your specified amount.',
+			description: 'Fast forwards the player by your specified amount  (Default: 10 secs).',
 			usage: 'fast-forward <time>',
 			cooldown: 3000,
 			examples: ['ffw 1:00', 'ffw 1:32:00'],
-			slash: true,
+			slash: false,
+			isSubCmd: true,
 			options: [{
-				name: 'amount',
-				description: 'The amount you want to fastforward.',
+				name: 'time',
+				description: 'The amount of time to fast forward to.',
 				type: ApplicationCommandOptionType.String,
 				required: false,
 			}],
@@ -83,7 +84,7 @@ class FastForward extends Command {
 		if (!player.queue.current.isSeekable) return interaction.reply({ embeds: [channel.error('music/fast-forward:LIVESTREAM', { ERROR: null }, true)], ephemeral: true });
 
 		// update the time
-		const time = read24hrFormat(args.get('amount')?.value ?? '10');
+		const time = read24hrFormat(args.get('time')?.value ?? '10');
 
 		if (time + player.position >= player.queue.current.duration) {
 			interaction.reply(guild.translate('music/fast-forward:TOO_LONG', { TIME: new Date(player.queue.current.duration).toISOString().slice(14, 19) }));
