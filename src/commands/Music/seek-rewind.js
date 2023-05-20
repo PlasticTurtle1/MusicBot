@@ -14,7 +14,7 @@ class Rewind extends Command {
 	*/
 	constructor(bot) {
 		super(bot, {
-			name: 'seek-rewind',
+			name: 'rewind',
 			guildOnly: true,
 			dirname: __dirname,
 			aliases: ['rw'],
@@ -22,9 +22,9 @@ class Rewind extends Command {
 			description: 'Rewinds the player by your specified amount  (Default: 10 secs).',
 			usage: 'rewind <time>',
 			cooldown: 3000,
-			examples: ['rw 1:00', 'rw 1:32:00'],
-			slash: false,
-			isSubCmd: true,
+			examples: ['rw 1:05', 'rw 32'],
+			slash: true,
+			isSubCmd: false,
 			options: [{
 				name: 'time',
 				description: 'The amount of time to rewind by.',
