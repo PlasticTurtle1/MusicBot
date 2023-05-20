@@ -14,7 +14,7 @@ class FastForward extends Command {
 	*/
 	constructor(bot) {
 		super(bot, {
-			name: 'seek-fast_forward',
+			name: 'forward',
 			guildOnly: true,
 			dirname: __dirname,
 			aliases: ['ffw', 'fastforward'],
@@ -23,13 +23,13 @@ class FastForward extends Command {
 			usage: 'fast-forward <time>',
 			cooldown: 3000,
 			examples: ['ffw 1:00', 'ffw 1:32:00'],
-			slash: false,
-			isSubCmd: true,
+			slash: true,
+			isSubCmd: false,
 			options: [{
 				name: 'time',
 				description: 'The amount of time to fast forward to.',
 				type: ApplicationCommandOptionType.String,
-				required: false,
+				required: true,
 			}],
 		});
 	}
