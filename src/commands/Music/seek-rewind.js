@@ -29,7 +29,7 @@ class Rewind extends Command {
 				name: 'time',
 				description: 'The amount of time to rewind by.',
 				type: ApplicationCommandOptionType.String,
-				required: false,
+				required: true,
 			}],
 		});
 	}
