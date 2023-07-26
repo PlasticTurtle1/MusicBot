@@ -115,7 +115,7 @@ class PAdd extends Command {
 			case 'TRACK_LOADED':
 				try {
 					// add songs to playlist
-					const newTracks = res.tracks.slice(0, (user.premium ? 1000 : 800) - playlist.songs.length);
+					const newTracks = res.tracks.slice(0, (user.premium ? 2000 : 1000) - playlist.songs.length);
 					playlist.songs.push(...newTracks);
 					playlist.duration = parseInt(playlist.duration) + parseInt(res.tracks.reduce((prev, curr) => prev + curr.duration, 0));
 					await playlist.save();
