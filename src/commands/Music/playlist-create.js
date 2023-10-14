@@ -66,8 +66,8 @@ class PCreate extends Command {
 			} else if (playlists[0] && !message.author.premium) {
 				// User needs premium to save more playlists
 				return msg.edit(message.translate('music/p-create:NO_PREM'));
-			} else if (playlists.length >= 3 && message.author.premium) {
-				// there is a max of 3 playlists per a user even with premium
+			} else if (playlists.length >= 20 && message.author.premium) {
+				// there is a max of 20 playlists per a user even with premium
 				return msg.edit(message.translate('music/p-create:MAX_PLAYLISTS'));
 			} else if (playlists && message.author.premium) {
 				// user can have save another playlist as they have premium
@@ -110,8 +110,8 @@ class PCreate extends Command {
 			} else if (playlists[0] && !interaction.user.premium) {
 				// User needs premium to save more playlists
 				await interaction.reply({ embeds: [channel.error('music/p-create:NO_PREM', null, true)] });
-			} else if (playlists.length >= 3 && interaction.user.premium) {
-				// there is a max of 3 playlists per a user even with premium
+			} else if (playlists.length >= 20 && interaction.user.premium) {
+				// there is a max of 20 playlists per a user even with premium
 				await interaction.reply({ embeds: [channel.error('music/p-create:MAX_PLAYLISTS', null, true)] });
 			} else if (playlists && interaction.user.premium) {
 				// user can have save another playlist as they have premium
@@ -153,7 +153,7 @@ class PCreate extends Command {
 				return channel.error('music/play:NO_SONG', null, true);
 			case 'playlist':
 			case 'track': {
-				const tracks = res.playlist?.tracks.slice(0, user.premium ? 200 : 100) ?? res.tracks.slice(0, user.premium ? 200 : 100);
+				const tracks = res.playlist?.tracks.slice(0, user.premium ? 2000 : 1000) ?? res.tracks.slice(0, user.premium ? 200 : 100);
 				const thumbnail = res.playlist?.tracks[0]?.thumbnail ?? res.tracks[0]?.thumbnail ?? null;
 				const duration = res.playlist?.duration ?? res.tracks[0].duration;
 				return await this.savePlaylist(bot, channel, user, playlistName, { tracks, duration, thumbnail });
@@ -227,7 +227,7 @@ class PCreate extends Command {
 					channel.guild.translate('music/p-create:DESC_2', { NUM: getReadableTime(parseInt(newPlaylist.duration)) }),
 					channel.guild.translate('music/p-create:DESC_3', { NAME: resData.tracks[0].title, NUM: resData.tracks.length, TITLE: playlistName }),
 				].join('\n'))
-				.setFooter({ text: channel.guild.translate('music/p-create:FOOTER', { ID: newPlaylist._id, NUM: newPlaylist.songs.length, PREM: (user.premium) ? '200' : '100' }) })
+				.setFooter({ text: channel.guild.translate('music/p-create:FOOTER', { ID: newPlaylist._id, NUM: newPlaylist.songs.length, PREM: (user.premium) ? '2000' : '1000' }) })
 				.setTimestamp();
 			return embed;
 		} catch (err) {
