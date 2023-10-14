@@ -1,12 +1,11 @@
 // Dependecies
-const { Structure } = require('erela.js');
+const { Structure } = require('magmastream');
 
 module.exports = Structure.extend('Player', Player => {
 	class CustomPlayer extends Player {
 		constructor(...args) {
 			super(...args);
 			// extra settings
-			this.twentyFourSeven = false;
 			this.previousTracks = [];
 			// for bot leave function
 			this.timeout = null;
@@ -14,6 +13,7 @@ module.exports = Structure.extend('Player', Player => {
 			this.speed = 1;
 			this.bassboost = false;
 			this.nightcore = false;
+            this.slowmo = false;
 			this.vaporwave = false;
 			// for Autoplay
 			this.autoplay = false;
@@ -84,24 +84,44 @@ module.exports = Structure.extend('Player', Player => {
 			return this;
 		}
 
+		// update slowmo filter
+		setSlowmo(value) {
+			if (value) {
+				this.setFilter({
+					timescale: { speed: 0.7, pitch: 1.0, rate: 0.8 },
+				});
+				this.slowmo = true;
+			} else {
+				this.resetFilter();
+				this.slowmo = false;
+			}
+			return this;
+		}
+
 		// send lavalink the new filters
 		setFilter(body = {}) {
-			this.node.send({
-				op: 'filters',
-				guildId: this.guild.id || this.guild,
-				...body,
+			this.node.rest.updatePlayer({
+				data: {
+					filters: {
+						...body,
+					},
+				},
+				guildId: this.guild,
 			});
 			return this;
 		}
 
 		// reset filters
 		resetFilter() {
-			this.speed = 1;
-			this.node.send({
-				op: 'filters',
-				guildId: this.guild.id || this.guild,
-				...{},
+			this.node.rest.updatePlayer({
+				data: {
+					filters: {},
+				},
+				guildId: this.guild,
 			});
+			this.speed = 1;
+			this.nightcore = false;
+			this.vaporwave = false;
 			return this;
 		}
 
@@ -114,10 +134,13 @@ module.exports = Structure.extend('Player', Player => {
 		// Change playback speed
 		setSpeed(value) {
 			this.speed = value;
-			this.node.send({
-				op: 'filters',
-				guildId: this.guild.id || this.guild,
-				timescale: { speed: value },
+			this.node.rest.updatePlayer({
+				data: {
+					filters: {
+						timescale: { speed: value },
+					},
+				},
+				guildId: this.guild,
 			});
 			return this;
 		}

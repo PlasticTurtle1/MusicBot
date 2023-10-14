@@ -28,7 +28,7 @@ module.exports = function(bot) {
 
 			// check if an ID query was made
 			let members = guild.members.cache.map(member => ({
-				user: member.user.username,
+				user: member.user.displayName,
 				id: member.user.id,
 				avatar: member.user.displayAvatarURL({ size: 128 }),
 			}));
@@ -80,6 +80,23 @@ module.exports = function(bot) {
 			res.status(400).json({ error: 'Guild not found!' });
 		}
 	});
+
+	router.get('/:guildId/refresh', async (req, res) => {
+		const guild = bot.guilds.cache.get(req.params.guildId);
+
+		if (guild) {
+			try {
+				await guild.fetchSettings();
+				res.json({ success: 'Successfully reloaded guild settings' });
+			} catch (e) {
+				res.json({ error: `An error occured refreshing guild: ${req.params.guildId} settings.` });
+			}
+		} else {
+			res.json({ error: `No guild was found with the ID: ${req.params.guildId}` });
+		}
+
+	});
+
 
 	return router;
 };

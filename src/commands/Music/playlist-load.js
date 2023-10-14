@@ -1,7 +1,7 @@
 // Dependencies
 const	{ Embed } = require('../../utils'),
 	{ PlaylistSchema } = require('../../database/models'),
-	{ TrackUtils } = require('erela.js'),
+	{ TrackUtils } = require('magmastream'),
 	{ ApplicationCommandOptionType, PermissionsBitField: { Flags } } = require('discord.js'),
 	Command = require('../../structures/Command.js');
 
@@ -122,7 +122,7 @@ class PLoad extends Command {
 	async loadPlaylist(bot, channel, member, playlistName) {
 		try {
 			// interact with database
-			const playlist = PlaylistSchema.findOne({
+			const playlist = await PlaylistSchema.findOne({
 				name: playlistName,
 				creator: member.user.id,
 			});

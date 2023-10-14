@@ -47,7 +47,7 @@ class Pitch extends Command {
 		const player = bot.manager?.players.get(message.guild.id);
 
 		if (message.args[0] && (message.args[0].toLowerCase() == 'reset' || message.args[0].toLowerCase() == 'off')) {
-			player.resetFilter();
+			player.filters.clearFilters();
 			const msg = await message.channel.send(message.translate('music/pitch:PITCH_OFF'));
 			const embed = new EmbedBuilder()
 				.setDescription(message.translate('music/pitch:DESC_1'));
@@ -88,7 +88,7 @@ class Pitch extends Command {
 		const player = bot.manager?.players.get(member.guild.id);
 
 		if (amount && ['reset', 'off'].includes(amount.toLowerCase())) {
-			player.resetFilter();
+			player.filters.clearFilters();
 			await interaction.reply(bot.translate('music/pitch:PITCH_OFF'));
 			const embed = new EmbedBuilder()
 				.setDescription(bot.translate('music/pitch:DESC_1'));

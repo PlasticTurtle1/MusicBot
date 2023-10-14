@@ -14,8 +14,12 @@ class LevelManager {
 		// Check if this was triggered by an ignored channel
 		if (settings.LevelIgnoreChannel?.includes(channel.id)) return;
 
+		// Check if the member has an ignored role
 		const roles = member.roles.cache.map(r => r.id);
 		if (roles.some(r => settings.LevelIgnoreRoles?.includes(r))) return;
+
+		// Make sure it's actual message sent by the user
+		if (this.message.type != 0) return;
 
 		// Add a cooldown so people can't spam levels
 		if (!levelcd.has(member.id)) {
@@ -53,7 +57,7 @@ class LevelManager {
 							const lvlChannel = guild.channels.cache.get(settings.LevelChannel);
 							if (lvlChannel) lvlChannel.send(settings.LevelMessage.replace('{user}', this.message.author).replace('{level}', res.Level));
 						}
-						if (this.bot.config.debug) this.bot.logger.debug(`${this.message.author.tag} has leveled up to ${res.Level} in guild: ${guild.id}.`);
+						if (this.bot.config.debug) this.bot.logger.debug(`${this.message.author.displayName} has leveled up to ${res.Level} in guild: ${guild.id}.`);
 					}
 
 					// update database
