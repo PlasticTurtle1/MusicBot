@@ -16,11 +16,7 @@ class Disconnect extends Command {
 			name: 'disconnect',
 			guildOnly: true,
 			dirname: __dirname,
-<<<<<<< HEAD:src/commands/Music/dc.js
-			aliases: ['stop', 'disconnect', 'leave'],
-=======
 			aliases: ['stop', 'dc'],
->>>>>>> 6853848a81971fed43d3d5a35a2914cf0f7a585d:src/commands/Music/disconnect.js
 			description: 'Disconnects the bot from the voice channel.',
 			usage: 'disconnect',
 			cooldown: 3000,
