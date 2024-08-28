@@ -16,8 +16,6 @@ module.exports = Structure.extend('Player', Player => {
 			this.nightcore = false;
 			this.slowmo = false;
 			this.vaporwave = false;
-			// for Autoplay
-			this.autoplay = false;
 		}
 
 		// update bassboost filter
@@ -145,6 +143,7 @@ module.exports = Structure.extend('Player', Player => {
 				guildId: this.guild,
 			});
 			this.speed = 1;
+			this.bassboost = false;
 			this.nightcore = false;
 			this.vaporwave = false;
 			this.slowmo = false;
